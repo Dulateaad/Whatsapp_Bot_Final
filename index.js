@@ -8,6 +8,18 @@ const DATA_DIR = process.env.DATA_DIR || "./data";
 const AUTH_DIR = process.env.AUTH_DIR || path.join(DATA_DIR, "session");
 const WHITELIST_FILE = process.env.WHITELIST_FILE || path.join(DATA_DIR, "whitelist.json");
 
+// ==== Создаём папки если нет ====
+[DATA_DIR, AUTH_DIR].forEach((dir) => {
+  try {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+      console.log("📂 Создана папка:", dir);
+    }
+  } catch (err) {
+    console.error("❌ Не удалось создать папку:", dir, err);
+  }
+});
+
 // ==== Ключевые слова ====
 const keywords = {
   привет: "Привет! 👋 Я бот на Render.",
@@ -51,13 +63,11 @@ client.on("ready", () => {
 client.on("message", async (message) => {
   console.log(`📩 Сообщение от ${message.from}: ${message.body}`);
 
-  // Проверяем whitelist
   if (whitelist.length > 0 && !whitelist.includes(message.from)) {
     console.log("⛔ Пользователь не в whitelist, игнорируем.");
     return;
   }
 
-  // Проверяем ключевые слова
   const text = message.body.toLowerCase();
   for (const key in keywords) {
     if (text.includes(key)) {
