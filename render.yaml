@@ -1,0 +1,23 @@
+services:
+  - type: worker
+    name: whatsapp-antispam-bot
+    env: node
+    plan: starter
+    branch: main
+    buildCommand: "npm ci"
+    startCommand: "node index.js"
+    envVars:
+      - key: DATA_DIR
+        value: /data
+      - key: AUTH_DIR
+        value: /data/session
+      - key: WHITELIST_FILE
+        value: /data/whitelist.json
+      - key: ENABLE_OCR
+        value: "true"
+      - key: OCR_LANG
+        value: "rus+eng"
+    disks:
+      - name: data
+        mountPath: /data
+        sizeGB: 1
