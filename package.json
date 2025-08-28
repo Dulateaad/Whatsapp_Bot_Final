@@ -1,15 +1,10 @@
 {
   "name": "whatsapp-antispam-bot",
   "version": "1.0.0",
-  "main": "src/index.js",
-  "type": "module",
-  "scripts": {
-    "start": "node src/index.js"
-  },
+  "main": "index.js",
+  "type": "commonjs",
   "dependencies": {
-    "whatsapp-web.js": "^1.24.0",
-    "qrcode-terminal": "^0.12.0",
-    "openai": "^4.0.0",
-    "dotenv": "^16.0.3"
+    "whatsapp-web.js": "^1.23.0",
+    "qrcode-terminal": "^0.12.0"
   }
 }
